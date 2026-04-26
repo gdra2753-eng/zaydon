@@ -6,9 +6,9 @@
       "settings": {
         "clients": [
           {
-            "id": "d2cb8181-233c-4d18-9972-8a1b04db7744",
+            "id": "d2cb8181-233c-4d18-9972-8a1b04db0363",
             "level": 0,
-            "email": "user1"
+            "email": "user@cloud"
           }
         ],
         "decryption": "none"
@@ -17,7 +17,7 @@
         "network": "ws",
         "security": "none",
         "wsSettings": {
-          "path": "/api",
+          "path": "/wb",
           "headers": {
             "Host": "your-domain.run.app"
           }
