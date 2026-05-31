@@ -1,8 +1,6 @@
 {
   "log": {
-    "loglevel": "warning",
-    "access": "/dev/stdout",
-    "error": "/dev/stderr"
+    "loglevel": "warning"
   },
   "inbounds": [
     {
@@ -11,86 +9,24 @@
       "settings": {
         "clients": [
           {
-            "id": "ba0e3984-ccc9-48a3-1435-b2f507f41ce8",
-            "flow": ""
+            "id": "ba0e3984-ccc9-48a3-1234-b2f507f56ce8"
           }
         ],
         "decryption": "none"
       },
       "streamSettings": {
         "network": "ws",
+        "security": "none",
         "wsSettings": {
-          "path": "/@Lx_rm",
-          "headers": {
-            "Host": ""
-          }
-        },
-        "security": "none"
+          "path": "/vless"
+        }
       }
     }
   ],
   "outbounds": [
     {
       "protocol": "freedom",
-      "settings": {},
-      "tag": "direct"
-    },
-    {
-      "protocol": "blackhole",
-      "settings": {},
-      "tag": "blocked"
+      "settings": {}
     }
-  ],
-  "routing": {
-    "domainStrategy": "IPIfNonMatch",
-    "rules": [
-      {
-        "type": "field",
-        "outboundTag": "direct",
-        "domain": [
-          "geosite:google",
-          "geosite:facebook",
-          "geosite:twitter",
-          "geosite:telegram",
-          "geosite:whatsapp",
-          "geosite:netflix",
-          "geosite:youtube",
-          "geosite:github",
-          "geosite:cloudflare",
-          "geosite:openai",
-          "geosite:google-scholar",
-          "domain:firebaseremoteconfig.googleapis.com"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "direct",
-        "ip": [
-          "geoip:private",
-          "geoip:cn",
-          "8.8.8.8/32",
-          "1.1.1.1/32"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "blocked",
-        "domain": [
-          "geosite:category-ads-all"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "direct",
-        "network": "udp,tcp"
-      }
-    ]
-  },
-  "dns": {
-    "servers": [
-      "8.8.8.8",
-      "1.1.1.1",
-      "localhost"
-    ]
-  }
-          }
+  ]
+}
