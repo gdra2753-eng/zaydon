@@ -6,10 +6,12 @@
     "levels": {
       "0": {
         "handshake": 3,
-        "connIdle": 60,
-        "uplinkOnly": 1,
-        "downlinkOnly": 1,
-        "bufferSize": 512
+        "connIdle": 300,
+        "uplinkOnly": 2,
+        "downlinkOnly": 2,
+        "bufferSize": 1024,
+        "statsUserUplink": false,
+        "statsUserDownlink": false
       }
     },
     "system": {
@@ -24,7 +26,7 @@
       "settings": {
         "clients": [
           {
-            "id": "ba0e3984-ccc9-41a3-1084-b2f507f56ce8",
+            "id": "PLACEHOLDER_UUID",
             "level": 0,
             "flow": ""
           }
@@ -35,23 +37,22 @@
         "network": "ws",
         "security": "none",
         "wsSettings": {
-          "path": "/api",
+          "path": "/ws",
           "headers": {
             "Host": ""
           }
         },
         "sockopt": {
           "tcpFastOpen": true,
-          "tcpKeepAliveInterval": 15,
-          "tcpKeepAliveIdle": 30,
+          "tcpNoDelay": true,
+          "tcpKeepAliveInterval": 10,
+          "tcpKeepAliveIdle": 20,
           "mark": 0,
           "tproxy": "off"
         }
       },
       "sniffing": {
-        "enabled": true,
-        "destOverride": ["http", "tls"],
-        "routeOnly": true
+        "enabled": false
       }
     }
   ],
@@ -66,8 +67,9 @@
       "streamSettings": {
         "sockopt": {
           "tcpFastOpen": true,
-          "tcpKeepAliveInterval": 15,
-          "tcpKeepAliveIdle": 30,
+          "tcpNoDelay": true,
+          "tcpKeepAliveInterval": 10,
+          "tcpKeepAliveIdle": 20,
           "mark": 0
         }
       }
@@ -90,13 +92,8 @@
   },
   "dns": {
     "servers": [
-      {
-        "address": "8.8.8.8",
-        "port": 53,
-        "domains": ["geosite:geolocation-!cn"]
-      },
-      "1.1.1.1",
-      "localhost"
+      "8.8.8.8",
+      "1.1.1.1"
     ],
     "queryStrategy": "UseIPv4"
   }
