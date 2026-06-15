@@ -2,6 +2,21 @@
   "log": {
     "loglevel": "warning"
   },
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 3,
+        "connIdle": 60,
+        "uplinkOnly": 1,
+        "downlinkOnly": 1,
+        "bufferSize": 512
+      }
+    },
+    "system": {
+      "statsInboundUplink": false,
+      "statsInboundDownlink": false
+    }
+  },
   "inbounds": [
     {
       "port": 8080,
@@ -9,7 +24,9 @@
       "settings": {
         "clients": [
           {
-            "id": "ba0e3984-ccc9-48a3-1234-b2f507f56ce8"
+            "id": "ba0e3984-ccc9-41a3-1084-b2f507f56ce8",
+            "level": 0,
+            "flow": ""
           }
         ],
         "decryption": "none"
@@ -18,15 +35,69 @@
         "network": "ws",
         "security": "none",
         "wsSettings": {
-          "path": "/vless"
+          "path": "/api",
+          "headers": {
+            "Host": ""
+          }
+        },
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveIdle": 30,
+          "mark": 0,
+          "tproxy": "off"
         }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"],
+        "routeOnly": true
       }
     }
   ],
   "outbounds": [
     {
+      "tag": "direct",
       "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIPv4",
+        "userLevel": 0
+      },
+      "streamSettings": {
+        "sockopt": {
+          "tcpFastOpen": true,
+          "tcpKeepAliveInterval": 15,
+          "tcpKeepAliveIdle": 30,
+          "mark": 0
+        }
+      }
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole",
       "settings": {}
     }
-  ]
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "ip": ["geoip:private"],
+        "outboundTag": "block"
+      }
+    ]
+  },
+  "dns": {
+    "servers": [
+      {
+        "address": "8.8.8.8",
+        "port": 53,
+        "domains": ["geosite:geolocation-!cn"]
+      },
+      "1.1.1.1",
+      "localhost"
+    ],
+    "queryStrategy": "UseIPv4"
+  }
 }
